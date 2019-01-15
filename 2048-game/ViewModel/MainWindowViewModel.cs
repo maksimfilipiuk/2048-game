@@ -16,7 +16,7 @@ namespace _2048_game.ViewModel
         {
             get
             {
-                if(newGameCommand == null)
+                if (newGameCommand == null)
                 {
                     newGameCommand = new RelayCommand(ExecuteNewGameCommand);
                 }
