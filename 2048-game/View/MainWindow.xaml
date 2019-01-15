@@ -3,10 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:_2048_game"
+        xmlns:local="clr-namespace:_2048_game.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="2048" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="1" Text="2048" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Code Pro Bold" FontSize="36"/>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Button Content="Новая игра" Command="{Binding NewGameCommand}" Padding="40, 8, 40, 8" Margin="4,4,4.2,4"/>
+            <Button Content="Продолжить..." Padding="40, 8, 40, 8" Margin="4"/>
+            <Button Content="Статистика" Padding="40, 8, 40, 8" Margin="4"/>
+            <Button Content="Выход" Padding="40, 8, 40, 8" Margin="4" />
+        </StackPanel>
+
+
+
     </Grid>
 </Window>
