@@ -120,6 +120,24 @@ namespace _2048_game.ViewModel
 
         #endregion
 
+        private void GenerateValueRandomPosition()
+        {
+            Random random = new Random();
+
+            while (true)
+            {
+                int a = random.Next(4), b = random.Next(4);
+
+                if (MainArrayVM[a, b] == 0)
+                {
+                    int multiplier = random.Next(1, 3);
+                    MainArrayVM[a, b] = 2 * multiplier;
+
+                    break;
+                }
+            }
+        }
+
         private int[,] GenerateBeginState()
         {
             int[,] tempArray = new int[4, 4];
@@ -137,13 +155,13 @@ namespace _2048_game.ViewModel
                 d = random.Next(4);
             }
 
-            //tempArray[a, b] = 2; // КОРРЕКТНЫЙ КОД!
-            //tempArray[c, d] = 2; // КОММЕНТ НА ВРЕМЯ ТЕСТИРОВАНИЯ!
+            tempArray[a, b] = 2; // КОРРЕКТНЫЙ КОД!
+            tempArray[c, d] = 2; // КОММЕНТ НА ВРЕМЯ ТЕСТИРОВАНИЯ!
 
-            tempArray[0, 0] = 2;
-            tempArray[1, 0] = 2;
-            tempArray[2, 0] = 2;
-            tempArray[3, 0] = 2;
+            //tempArray[0, 0] = 2;
+            //tempArray[1, 0] = 2;
+            //tempArray[2, 0] = 2;
+            //tempArray[3, 0] = 2;
             
             //MessageBox.Show(String.Format("{0} {1}", random1.Next(4), random1.Next(4)));
 
@@ -190,6 +208,7 @@ namespace _2048_game.ViewModel
                 }
             }
 
+            GenerateValueRandomPosition();
             OnPropertyChanged("GameData"); // Вызываем событие для обновления вьюхи
         }
 
@@ -233,6 +252,7 @@ namespace _2048_game.ViewModel
                 }
             }
 
+            GenerateValueRandomPosition();
             OnPropertyChanged("GameData");
         }
 
@@ -269,6 +289,7 @@ namespace _2048_game.ViewModel
                 }
             }
 
+            GenerateValueRandomPosition();
             OnPropertyChanged("GameData");
         }
 
@@ -306,6 +327,7 @@ namespace _2048_game.ViewModel
                 }
             }
 
+            GenerateValueRandomPosition();
             OnPropertyChanged("GameData");
         }
 

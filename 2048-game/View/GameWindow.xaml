@@ -22,7 +22,7 @@
 
     <Window.Resources>
         <Style x:Key="TextBlockRectangleClassicStyle">
-            <Setter Property="TextBlock.FontSize" Value="24"/>
+            <Setter Property="TextBlock.FontSize" Value="30"/>
             <Setter Property="TextBlock.Padding" Value="0,36,0,0"/>
             <Setter Property="TextBlock.Margin" Value="2,2,2,2"/>
             <Setter Property="TextBlock.Background" Value="AntiqueWhite"/>
