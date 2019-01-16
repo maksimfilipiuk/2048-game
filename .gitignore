@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/2048-game/Code Pro Bold.otf
+/2048-game/fonts
