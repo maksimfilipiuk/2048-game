@@ -140,10 +140,10 @@ namespace _2048_game.ViewModel
             //tempArray[a, b] = 2; // КОРРЕКТНЫЙ КОД!
             //tempArray[c, d] = 2; // КОММЕНТ НА ВРЕМЯ ТЕСТИРОВАНИЯ!
 
+            tempArray[0, 0] = 2;
+            tempArray[1, 0] = 2;
             tempArray[2, 0] = 2;
-            tempArray[2, 1] = 2;
-            tempArray[2, 2] = 2;
-            tempArray[2, 3] = 2;
+            tempArray[3, 0] = 2;
             
             //MessageBox.Show(String.Format("{0} {1}", random1.Next(4), random1.Next(4)));
 
@@ -241,10 +241,8 @@ namespace _2048_game.ViewModel
             //MessageBox.Show("Up Arrow Command");
 
             
-            for (int n = MainArrayVM.GetLength(0) - 1; n > 0; n--)
+            for (int n = MainArrayVM.GetLength(0) - 1; n > 0; n--) // Итерация строк
             {
-                
-
                 // Слияние
                 for (int m = 0; m <= MainArrayVM.GetLength(1) - 1; m++) // Итерация столбиков
                 {
@@ -261,7 +259,6 @@ namespace _2048_game.ViewModel
                 {
                     for (int j = 0; j <= MainArrayVM.GetLength(1) - 1; j++) // Итерация столбиков
                     {
-
                         if (MainArrayVM[i, j] != 0 && MainArrayVM[i - 1, j] == 0)
                         {
                             MainArrayVM[i - 1, j] = MainArrayVM[i, j];
@@ -279,6 +276,35 @@ namespace _2048_game.ViewModel
         {
             //MessageBox.Show("Down Arrow Command");
 
+            for (int n = 0; n <= MainArrayVM.GetLength(0) - 1; n++) // Итерация строк
+            {
+                // Слияние
+                for (int m = 0; m <= MainArrayVM.GetLength(1) - 1; m++) // Итерация столбиков
+                {
+                    if (n + 1 > MainArrayVM.GetLength(1) - 1) continue;
+
+                    if (MainArrayVM[n, m] != 0 && MainArrayVM[n + 1, m] != 0 &&
+                        MainArrayVM[n, m] == MainArrayVM[n + 1, m])
+                    {
+                        MainArrayVM[n + 1, m] *= 2;
+                        MainArrayVM[n, m] = 0;
+                    }
+                }
+
+                // Сдвиг
+                for (int i = 0; i < MainArrayVM.GetLength(0) - 1; i++) // Итерация строк
+                {
+                    for (int j = MainArrayVM.GetLength(1) - 1; j >= 0; j--) // Итерация столбиков
+                    {
+                        if (MainArrayVM[i, j] != 0 && MainArrayVM[i + 1, j] == 0)
+                        {
+                            MainArrayVM[i + 1, j] = MainArrayVM[i, j];
+                            MainArrayVM[i, j] = 0;
+                        }
+
+                    }
+                }
+            }
 
             OnPropertyChanged("GameData");
         }
