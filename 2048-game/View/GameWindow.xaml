@@ -11,6 +11,13 @@
         <local:GameWindowViewModel/>
     </Window.DataContext>
 
+    <Window.InputBindings>
+        <KeyBinding Key="Left" Command="{Binding LeftArrayCommand}"/>
+        <KeyBinding Key="Right" Command="{Binding RightArrayCommand}"/>
+        <KeyBinding Key="Up" Command="{Binding UpArrayCommand}"/>
+        <KeyBinding Key="Down" Command="{Binding DownArrayCommand}"/>
+    </Window.InputBindings>
+
     <Window.Resources>
         <Style x:Key="TextBlockRectangleClassicStyle">
             <Setter Property="TextBlock.FontSize" Value="24"/>

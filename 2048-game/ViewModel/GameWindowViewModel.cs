@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using _2048_game.Model;
+using _2048_game.Infrastructure;
+using System.Windows.Input;
 
 namespace _2048_game.ViewModel
 {
@@ -14,7 +16,7 @@ namespace _2048_game.ViewModel
         {
             get
             {
-                if(GameData.MainArray[0, 0] == -1)
+                if (GameData.MainArray[0, 0] == -1)
                 {
                     GameData.MainArray = GenerateBeginState();
                 }
@@ -28,28 +30,67 @@ namespace _2048_game.ViewModel
             }
         }
 
-        private int[,] GenerateBeginState()
+        #region Свойства комманд для клавиш управления
+
+        RelayCommand leftArrayCommand;
+        public ICommand LeftArrayCommand
         {
-            int[,] tempArray = new int[4, 4];
-
-            Random random = new Random();
-
-            int a = random.Next(4), b = random.Next(4), c = random.Next(4), d = random.Next(4);
-
-            while(a == c && b == d)
+            get
             {
-                a = random.Next(4);
-                b = random.Next(4);
-                c = random.Next(4);
-                d = random.Next(4);
+                if(leftArrayCommand == null)
+                {
+                    leftArrayCommand = new RelayCommand(ExecuteLeftArrayCommand);
+                }
+
+                return leftArrayCommand;
             }
-
-            tempArray[a, b] = 2;
-            tempArray[c, d] = 2;
-            //MessageBox.Show(String.Format("{0} {1}", random1.Next(4), random1.Next(4)));
-
-            return tempArray;
         }
+
+        RelayCommand rightArrayCommand;
+        public ICommand RightArrayCommand
+        {
+            get
+            {
+                if (rightArrayCommand == null)
+                {
+                    rightArrayCommand = new RelayCommand(ExecuteRightArrayCommand);
+                }
+
+                return rightArrayCommand;
+            }
+        }
+
+        RelayCommand upArrayCommand;
+        public ICommand UpArrayCommand
+        {
+            get
+            {
+                if (upArrayCommand == null)
+                {
+                    upArrayCommand = new RelayCommand(ExecuteUpArrayCommand);
+                }
+
+                return upArrayCommand;
+            }
+        }
+
+        RelayCommand downArrayCommand;
+        public ICommand DownArrayCommand
+        {
+            get
+            {
+                if (downArrayCommand == null)
+                {
+                    downArrayCommand = new RelayCommand(ExecuteDownArrayCommand);
+                }
+
+                return downArrayCommand;
+            }
+        }
+
+        #endregion
+
+        #region Свойства для всех ячеек главного массива
 
         public string MainArray00 { get => (MainArray[0, 0] == 0) ? (" ") : (MainArray[0, 0].ToString()); }
         public string MainArray01 { get => (MainArray[0, 1] == 0) ? (" ") : (MainArray[0, 1].ToString()); }
@@ -70,5 +111,52 @@ namespace _2048_game.ViewModel
         public string MainArray31 { get => (MainArray[3, 1] == 0) ? (" ") : (MainArray[3, 1].ToString()); }
         public string MainArray32 { get => (MainArray[3, 2] == 0) ? (" ") : (MainArray[3, 2].ToString()); }
         public string MainArray33 { get => (MainArray[3, 3] == 0) ? (" ") : (MainArray[3, 3].ToString()); }
+
+        #endregion
+
+        private int[,] GenerateBeginState()
+        {
+            int[,] tempArray = new int[4, 4];
+
+            Random random = new Random();
+
+            int a = random.Next(4), b = random.Next(4), c = random.Next(4), d = random.Next(4);
+
+            while (a == c && b == d)
+            {
+                a = random.Next(4);
+                b = random.Next(4);
+                c = random.Next(4);
+                d = random.Next(4);
+            }
+
+            tempArray[a, b] = 2;
+            tempArray[c, d] = 2;
+            //MessageBox.Show(String.Format("{0} {1}", random1.Next(4), random1.Next(4)));
+
+            return tempArray;
+        }
+
+        #region Методы-обработчики комманд клавиш управления
+
+        private void ExecuteRightArrayCommand(object obj)
+        {
+            MessageBox.Show("Right Array Command");
+        }
+        private void ExecuteUpArrayCommand(object obj)
+        {
+            MessageBox.Show("Up Array Command");
+        }
+        private void ExecuteDownArrayCommand(object obj)
+        {
+            MessageBox.Show("Down Array Command");
+        }
+
+        private void ExecuteLeftArrayCommand(object obj)
+        {
+            MessageBox.Show("Left Array Command");
+        }
+
+        #endregion
     }
 }
