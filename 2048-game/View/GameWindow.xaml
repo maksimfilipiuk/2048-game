@@ -17,7 +17,7 @@
         <KeyBinding Key="Up" Command="{Binding UpArrowCommand}"/>
         <KeyBinding Key="Down" Command="{Binding DownArrowCommand}"/>
         <!-- developer commands -->
-        <KeyBinding Key="S" Command="{Binding ShowArrayStateCommand}"/>
+            <KeyBinding Key="Tab" Command="{Binding ShowArrayStateCommand}"/>
     </Window.InputBindings>
 
     <Window.Resources>
@@ -60,24 +60,24 @@
             <TextBlock Text="-1" Margin="10, 0, 10, 10" TextAlignment="Center" FontSize="14"/>
         </StackPanel>
 
-        <TextBlock Text="{Binding Path=MainArray00, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}" />
-        <TextBlock Text="{Binding Path=MainArray01, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="2" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        <TextBlock Text="{Binding Path=MainArray02, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="3" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        <TextBlock Text="{Binding Path=MainArray03, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="4" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
- 
-        <TextBlock Text="{Binding Path=MainArray10, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        <TextBlock Text="{Binding Path=MainArray11, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="2" Grid.Column="2" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        <TextBlock Text="{Binding Path=MainArray12, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="2" Grid.Column="3" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        <TextBlock Text="{Binding Path=MainArray13, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="2" Grid.Column="4" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        
-        <TextBlock Text="{Binding Path=MainArray20, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="3" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        <TextBlock Text="{Binding Path=MainArray21, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="3" Grid.Column="2" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        <TextBlock Text="{Binding Path=MainArray22, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="3" Grid.Column="3" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        <TextBlock Text="{Binding Path=MainArray23, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="3" Grid.Column="4" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        
-        <TextBlock Text="{Binding Path=MainArray30, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="4" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        <TextBlock Text="{Binding Path=MainArray31, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="4" Grid.Column="2" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        <TextBlock Text="{Binding Path=MainArray32, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="4" Grid.Column="3" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
-        <TextBlock Text="{Binding Path=MainArray33, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="4" Grid.Column="4" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=GameData.MainArray00, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}" />
+        <TextBlock Text="{Binding Path=GameData.MainArray01, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="2" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=GameData.MainArray02, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="3" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=GameData.MainArray03, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="4" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+
+        <TextBlock Text="{Binding Path=GameData.MainArray10, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=GameData.MainArray11, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="2" Grid.Column="2" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=GameData.MainArray12, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="2" Grid.Column="3" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=GameData.MainArray13, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="2" Grid.Column="4" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+
+        <TextBlock Text="{Binding Path=GameData.MainArray20, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="3" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=GameData.MainArray21, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="3" Grid.Column="2" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=GameData.MainArray22, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="3" Grid.Column="3" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=GameData.MainArray23, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="3" Grid.Column="4" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+
+        <TextBlock Text="{Binding Path=GameData.MainArray30, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="4" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=GameData.MainArray31, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="4" Grid.Column="2" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=GameData.MainArray32, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="4" Grid.Column="3" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=GameData.MainArray33, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="4" Grid.Column="4" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
     </Grid>
 </Window>

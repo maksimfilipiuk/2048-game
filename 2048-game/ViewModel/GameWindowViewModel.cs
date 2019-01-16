@@ -12,21 +12,33 @@ namespace _2048_game.ViewModel
 {
     class GameWindowViewModel : ViewModelBase
     {
-        public int[,] MainArray
+        GameData gameData;
+        public GameData GameData
         {
             get
             {
-                if (GameData.MainArray[0, 0] == -1)
+                if(gameData == null)
                 {
-                    GameData.MainArray = GenerateBeginState();
+                    gameData = new GameData(GenerateBeginState());
                 }
 
+                return gameData;
+            }
+            set
+            {
+                gameData = value;
+            }
+        }
+
+        public int[,] MainArrayVM
+        {
+            get
+            {
                 return GameData.MainArray;
             }
             set
             {
                 GameData.MainArray = value;
-                OnPropertyChanged("MainArray");
             }
         }
 
@@ -108,30 +120,6 @@ namespace _2048_game.ViewModel
 
         #endregion
 
-        #region Свойства для всех ячеек главного массива
-
-        public string MainArray00 { get => (MainArray[0, 0] == 0) ? (" ") : (MainArray[0, 0].ToString()); }
-        public string MainArray01 { get => (MainArray[0, 1] == 0) ? (" ") : (MainArray[0, 1].ToString()); }
-        public string MainArray02 { get => (MainArray[0, 2] == 0) ? (" ") : (MainArray[0, 2].ToString()); }
-        public string MainArray03 { get => (MainArray[0, 3] == 0) ? (" ") : (MainArray[0, 3].ToString()); }
-
-        public string MainArray10 { get => (MainArray[1, 0] == 0) ? (" ") : (MainArray[1, 0].ToString()); }
-        public string MainArray11 { get => (MainArray[1, 1] == 0) ? (" ") : (MainArray[1, 1].ToString()); }
-        public string MainArray12 { get => (MainArray[1, 2] == 0) ? (" ") : (MainArray[1, 2].ToString()); }
-        public string MainArray13 { get => (MainArray[1, 3] == 0) ? (" ") : (MainArray[1, 3].ToString()); }
-
-        public string MainArray20 { get => (MainArray[2, 0] == 0) ? (" ") : (MainArray[2, 0].ToString()); }
-        public string MainArray21 { get => (MainArray[2, 1] == 0) ? (" ") : (MainArray[2, 1].ToString()); }
-        public string MainArray22 { get => (MainArray[2, 2] == 0) ? (" ") : (MainArray[2, 2].ToString()); }
-        public string MainArray23 { get => (MainArray[2, 3] == 0) ? (" ") : (MainArray[2, 3].ToString()); }
-
-        public string MainArray30 { get => (MainArray[3, 0] == 0) ? (" ") : (MainArray[3, 0].ToString()); }
-        public string MainArray31 { get => (MainArray[3, 1] == 0) ? (" ") : (MainArray[3, 1].ToString()); }
-        public string MainArray32 { get => (MainArray[3, 2] == 0) ? (" ") : (MainArray[3, 2].ToString()); }
-        public string MainArray33 { get => (MainArray[3, 3] == 0) ? (" ") : (MainArray[3, 3].ToString()); }
-
-        #endregion
-
         private int[,] GenerateBeginState()
         {
             int[,] tempArray = new int[4, 4];
@@ -148,8 +136,11 @@ namespace _2048_game.ViewModel
                 d = random.Next(4);
             }
 
-            tempArray[a, b] = 2;
-            tempArray[c, d] = 2;
+            //tempArray[a, b] = 2; // КОРРЕКТНЫЙ КОД!
+            //tempArray[c, d] = 2; // КОММЕНТ НА ВРЕМЯ ТЕСТИРОВАНИЯ!
+            tempArray[1, 1] = 4;
+            tempArray[1, 2] = 2;
+            tempArray[1, 3] = 2;
             //MessageBox.Show(String.Format("{0} {1}", random1.Next(4), random1.Next(4)));
 
             return tempArray;
@@ -159,37 +150,76 @@ namespace _2048_game.ViewModel
 
         private void ExecuteLeftArrowCommand(object obj)
         {
-            MessageBox.Show("Left Arrow Command");
+            // MessageBox.Show("Left Arrow Command");
+            // Сначала слияние, потом двигать.
+
+            // Слияние влево
+            for (int i = 0; i <= MainArrayVM.GetLength(0) - 1; i++) // Итерация строк
+            {
+                /*
+                dontCheck - переключатель для того, чтобы слитое значение не сливалось 
+                сразу же с соседним, если равные.
+                Т.е. 4<2<2 => 4<4 (один ход) => 8 (следующий)
+                */
+                bool dontCheck = false;
+
+                for (int j = MainArrayVM.GetLength(1) - 1; j >= 1; j--) // Итерация столбиков
+                {
+                    if (dontCheck) continue;
+
+                    if (MainArrayVM[i, j] == MainArrayVM[i, j-1]) // Если соседние значения равные, то...
+                    {
+                        // Происходит слияние
+
+                        /*
+                            ПОДСЧИТАТЬ ОЧКИ!
+                        */
+
+                        MainArrayVM[i, j-1] *= 2;
+                        MainArrayVM[i, j] = 0;
+
+                        dontCheck = true;
+                    }
+                }
+            }
+
+            OnPropertyChanged("GameData"); // Вызываем событие для обновления вьюхи
         }
 
         private void ExecuteRightArrowCommand(object obj)
         {
             MessageBox.Show("Right Arrow Command");
+
+
+            OnPropertyChanged("GameData");
         }
 
         private void ExecuteUpArrowCommand(object obj)
         {
-            MessageBox.Show("Up Arrow Command");
+            //MessageBox.Show("Up Arrow Command");
+
+            OnPropertyChanged("GameData");
         }
 
         private void ExecuteDownArrowCommand(object obj)
         {
-            MessageBox.Show("Down Arrow Command");
+            //MessageBox.Show("Down Arrow Command");
+
+
+            OnPropertyChanged("GameData");
         }
 
         #endregion
-
-        #region Методы-обработчики команд разработчика
 
         private void ExecuteShowArrayStateCommand(object obj)
         {
             StringBuilder str = new StringBuilder();
 
-            for (int i = 0; i < MainArray.GetLength(0); i++)
+            for (int i = 0; i < MainArrayVM.GetLength(0); i++)
             {
-                for (int j = 0; j < MainArray.GetLength(1); j++)
+                for (int j = 0; j < MainArrayVM.GetLength(1); j++)
                 {
-                    str.AppendFormat("{0}   ", MainArray[i, j]);
+                    str.AppendFormat("{0}   ", MainArrayVM[i, j]);
                 }
 
                 str.Append("\n");
@@ -198,6 +228,5 @@ namespace _2048_game.ViewModel
             MessageBox.Show(str.ToString(), "Main Array State");
         }
 
-        #endregion
     }
 }
