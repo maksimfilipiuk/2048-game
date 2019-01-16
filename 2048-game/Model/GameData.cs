@@ -8,15 +8,11 @@ namespace _2048_game.Model
 {
     class GameData
     {
-        /*
-                [][][][]
-                [][][][]
-                [][][][]
-                [][][][]
-        */
         private int[,] mainArray = new int[4,4];
-
         public int[,] MainArray { get => mainArray; set => mainArray = value; }
+
+        private int score = 0;
+        public int Score { get => score; set => score = value; }
 
         #region Свойства для всех ячеек главного массива
 
@@ -41,11 +37,6 @@ namespace _2048_game.Model
         public string MainArray33 { get => (MainArray[3, 3] == 0) ? (" ") : (MainArray[3, 3].ToString()); }
 
         #endregion
-
-        public GameData()
-        {
-            mainArray[0, 0] = -1;
-        }
 
         public GameData(int[,] mainArray)
         {

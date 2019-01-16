@@ -52,7 +52,7 @@
         <Button Content="Начать заново" Padding="10" Margin="-3, 20, 6, 20" Grid.Column="1" Grid.ColumnSpan="2"/>
         <StackPanel Grid.Column="3">
             <TextBlock Text="СЧЁТ" Margin="10, 20, 10, 0" TextAlignment="Center" FontSize="14"/>
-            <TextBlock Text="-1" Margin="10, 0, 10, 10" TextAlignment="Center" FontSize="14"/>
+            <TextBlock Text="{Binding Path=Score, UpdateSourceTrigger=PropertyChanged}" Margin="10, 0, 10, 10" TextAlignment="Center" FontSize="14"/>
         </StackPanel>
         
         <StackPanel Grid.Column="4">

@@ -20,6 +20,7 @@ namespace _2048_game.ViewModel
                 if(gameData == null)
                 {
                     gameData = new GameData(GenerateBeginState());
+                    OnPropertyChanged("Score");
                 }
 
                 return gameData;
@@ -39,6 +40,18 @@ namespace _2048_game.ViewModel
             set
             {
                 GameData.MainArray = value;
+            }
+        }
+
+        public int Score
+        {
+            get
+            {
+                return gameData.Score;
+            }
+            set
+            {
+                gameData.Score = value;
             }
         }
 
@@ -120,6 +133,13 @@ namespace _2048_game.ViewModel
 
         #endregion
 
+        private void actionAfterArrowCommand()
+        {
+            GenerateValueRandomPosition();
+            OnPropertyChanged("GameData");
+            OnPropertyChanged("Score");
+        }
+
         private void GenerateValueRandomPosition()
         {
             Random random = new Random();
@@ -185,9 +205,7 @@ namespace _2048_game.ViewModel
                     if (MainArrayVM[i, j] != 0 && MainArrayVM[i, j - 1] != 0 &&
                         MainArrayVM[i, j] == MainArrayVM[i, j - 1])
                     {
-                        /*
-                            ПОДСЧИТАТЬ ОЧКИ!
-                        */
+                        Score += MainArrayVM[i, j - 1] * 2;
 
                         MainArrayVM[i, j - 1] *= 2;
                         MainArrayVM[i, j] = 0;
@@ -208,8 +226,7 @@ namespace _2048_game.ViewModel
                 }
             }
 
-            GenerateValueRandomPosition();
-            OnPropertyChanged("GameData"); // Вызываем событие для обновления вьюхи
+            actionAfterArrowCommand();
         }
 
         private void ExecuteRightArrowCommand(object obj)
@@ -228,9 +245,7 @@ namespace _2048_game.ViewModel
                     if (MainArrayVM[i, j] != 0 && MainArrayVM[i, j + 1] != 0 &&
                         MainArrayVM[i, j] == MainArrayVM[i, j + 1])
                     {
-                        /*
-                            ПОДСЧИТАТЬ ОЧКИ!
-                        */
+                        Score += MainArrayVM[i, j + 1] * 2;
 
                         MainArrayVM[i, j + 1] *= 2;
                         MainArrayVM[i, j] = 0;
@@ -252,8 +267,7 @@ namespace _2048_game.ViewModel
                 }
             }
 
-            GenerateValueRandomPosition();
-            OnPropertyChanged("GameData");
+            actionAfterArrowCommand();
         }
 
         private void ExecuteUpArrowCommand(object obj)
@@ -269,6 +283,8 @@ namespace _2048_game.ViewModel
                     if (MainArrayVM[n, m] != 0 && MainArrayVM[n - 1, m] != 0 &&
                         MainArrayVM[n, m] == MainArrayVM[n - 1, m])
                     {
+                        Score += MainArrayVM[n - 1, m] * 2;
+
                         MainArrayVM[n - 1, m] *= 2;
                         MainArrayVM[n, m] = 0;
                     }
@@ -289,8 +305,7 @@ namespace _2048_game.ViewModel
                 }
             }
 
-            GenerateValueRandomPosition();
-            OnPropertyChanged("GameData");
+            actionAfterArrowCommand();
         }
 
         private void ExecuteDownArrowCommand(object obj)
@@ -307,6 +322,8 @@ namespace _2048_game.ViewModel
                     if (MainArrayVM[n, m] != 0 && MainArrayVM[n + 1, m] != 0 &&
                         MainArrayVM[n, m] == MainArrayVM[n + 1, m])
                     {
+                        Score += MainArrayVM[n + 1, m] * 2;
+
                         MainArrayVM[n + 1, m] *= 2;
                         MainArrayVM[n, m] = 0;
                     }
@@ -327,8 +344,7 @@ namespace _2048_game.ViewModel
                 }
             }
 
-            GenerateValueRandomPosition();
-            OnPropertyChanged("GameData");
+            actionAfterArrowCommand();
         }
 
         #endregion
