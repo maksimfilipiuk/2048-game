@@ -12,10 +12,12 @@
     </Window.DataContext>
 
     <Window.InputBindings>
-        <KeyBinding Key="Left" Command="{Binding LeftArrayCommand}"/>
-        <KeyBinding Key="Right" Command="{Binding RightArrayCommand}"/>
-        <KeyBinding Key="Up" Command="{Binding UpArrayCommand}"/>
-        <KeyBinding Key="Down" Command="{Binding DownArrayCommand}"/>
+        <KeyBinding Key="Left" Command="{Binding LeftArrowCommand}"/>
+        <KeyBinding Key="Right" Command="{Binding RightArrowCommand}"/>
+        <KeyBinding Key="Up" Command="{Binding UpArrowCommand}"/>
+        <KeyBinding Key="Down" Command="{Binding DownArrowCommand}"/>
+        <!-- developer commands -->
+        <KeyBinding Key="S" Command="{Binding ShowArrayStateCommand}"/>
     </Window.InputBindings>
 
     <Window.Resources>

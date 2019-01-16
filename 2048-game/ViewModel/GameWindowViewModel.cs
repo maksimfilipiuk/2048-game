@@ -30,61 +30,79 @@ namespace _2048_game.ViewModel
             }
         }
 
-        #region Свойства комманд для клавиш управления
+        #region Свойства команд для клавиш управления
 
-        RelayCommand leftArrayCommand;
-        public ICommand LeftArrayCommand
+        RelayCommand leftArrowCommand;
+        public ICommand LeftArrowCommand
         {
             get
             {
-                if(leftArrayCommand == null)
+                if(leftArrowCommand == null)
                 {
-                    leftArrayCommand = new RelayCommand(ExecuteLeftArrayCommand);
+                    leftArrowCommand = new RelayCommand(ExecuteLeftArrowCommand);
                 }
 
-                return leftArrayCommand;
+                return leftArrowCommand;
             }
         }
 
-        RelayCommand rightArrayCommand;
-        public ICommand RightArrayCommand
+        RelayCommand rightArrowCommand;
+        public ICommand RightArrowCommand
         {
             get
             {
-                if (rightArrayCommand == null)
+                if (rightArrowCommand == null)
                 {
-                    rightArrayCommand = new RelayCommand(ExecuteRightArrayCommand);
+                    rightArrowCommand = new RelayCommand(ExecuteRightArrowCommand);
                 }
 
-                return rightArrayCommand;
+                return rightArrowCommand;
             }
         }
 
-        RelayCommand upArrayCommand;
-        public ICommand UpArrayCommand
+        RelayCommand upArrowCommand;
+        public ICommand UpArrowCommand
         {
             get
             {
-                if (upArrayCommand == null)
+                if (upArrowCommand == null)
                 {
-                    upArrayCommand = new RelayCommand(ExecuteUpArrayCommand);
+                    upArrowCommand = new RelayCommand(ExecuteUpArrowCommand);
                 }
 
-                return upArrayCommand;
+                return upArrowCommand;
             }
         }
 
-        RelayCommand downArrayCommand;
-        public ICommand DownArrayCommand
+        RelayCommand downArrowCommand;
+        public ICommand DownArrowCommand
         {
             get
             {
-                if (downArrayCommand == null)
+                if (downArrowCommand == null)
                 {
-                    downArrayCommand = new RelayCommand(ExecuteDownArrayCommand);
+                    downArrowCommand = new RelayCommand(ExecuteDownArrowCommand);
                 }
 
-                return downArrayCommand;
+                return downArrowCommand;
+            }
+        }
+
+        #endregion
+
+        #region Свойства команд разработчика
+
+        RelayCommand showArrayStateCommand;
+        public ICommand ShowArrayStateCommand
+        {
+            get
+            {
+                if(showArrayStateCommand == null)
+                {
+                    showArrayStateCommand = new RelayCommand(ExecuteShowArrayStateCommand);
+                }
+
+                return showArrayStateCommand;
             }
         }
 
@@ -137,24 +155,47 @@ namespace _2048_game.ViewModel
             return tempArray;
         }
 
-        #region Методы-обработчики комманд клавиш управления
+        #region Методы-обработчики команд клавиш управления
 
-        private void ExecuteRightArrayCommand(object obj)
+        private void ExecuteLeftArrowCommand(object obj)
         {
-            MessageBox.Show("Right Array Command");
-        }
-        private void ExecuteUpArrayCommand(object obj)
-        {
-            MessageBox.Show("Up Array Command");
-        }
-        private void ExecuteDownArrayCommand(object obj)
-        {
-            MessageBox.Show("Down Array Command");
+            MessageBox.Show("Left Arrow Command");
         }
 
-        private void ExecuteLeftArrayCommand(object obj)
+        private void ExecuteRightArrowCommand(object obj)
         {
-            MessageBox.Show("Left Array Command");
+            MessageBox.Show("Right Arrow Command");
+        }
+
+        private void ExecuteUpArrowCommand(object obj)
+        {
+            MessageBox.Show("Up Arrow Command");
+        }
+
+        private void ExecuteDownArrowCommand(object obj)
+        {
+            MessageBox.Show("Down Arrow Command");
+        }
+
+        #endregion
+
+        #region Методы-обработчики команд разработчика
+
+        private void ExecuteShowArrayStateCommand(object obj)
+        {
+            StringBuilder str = new StringBuilder();
+
+            for (int i = 0; i < MainArray.GetLength(0); i++)
+            {
+                for (int j = 0; j < MainArray.GetLength(1); j++)
+                {
+                    str.AppendFormat("{0}   ", MainArray[i, j]);
+                }
+
+                str.Append("\n");
+            }
+
+            MessageBox.Show(str.ToString(), "Main Array State");
         }
 
         #endregion
