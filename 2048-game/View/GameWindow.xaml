@@ -3,10 +3,72 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:_2048_game.View"
+        xmlns:local="clr-namespace:_2048_game.ViewModel"
         mc:Ignorable="d"
-        Title="GameWindow" Height="450" Width="800">
+        Title="GameWindow" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+
+    <Window.DataContext>
+        <local:GameWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style x:Key="TextBlockRectangleClassicStyle">
+            <Setter Property="TextBlock.FontSize" Value="24"/>
+            <Setter Property="TextBlock.Padding" Value="0,36,0,0"/>
+            <Setter Property="TextBlock.Margin" Value="2,2,2,2"/>
+            <Setter Property="TextBlock.Background" Value="AntiqueWhite"/>
+            <Setter Property="TextBlock.Foreground" Value="#FF5D5D5D"/>
+            <Setter Property="TextBlock.FontFamily" Value="Code Pro Bold"/>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Content="Начать заново" Padding="10" Margin="-3, 20, 6, 20" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <StackPanel Grid.Column="3">
+            <TextBlock Text="СЧЁТ" Margin="10, 20, 10, 0" TextAlignment="Center" FontSize="14"/>
+            <TextBlock Text="-1" Margin="10, 0, 10, 10" TextAlignment="Center" FontSize="14"/>
+        </StackPanel>
         
+        <StackPanel Grid.Column="4">
+            <TextBlock Text="ЛУЧШИЙ" Margin="10, 20, 10, 0" TextAlignment="Center" FontSize="14"/>
+            <TextBlock Text="-1" Margin="10, 0, 10, 10" TextAlignment="Center" FontSize="14"/>
+        </StackPanel>
+
+        <TextBlock Text="{Binding Path=MainArray00, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}" />
+        <TextBlock Text="{Binding Path=MainArray01, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="2" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=MainArray02, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="3" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=MainArray03, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="4" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+ 
+        <TextBlock Text="{Binding Path=MainArray10, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=MainArray11, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="2" Grid.Column="2" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=MainArray12, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="2" Grid.Column="3" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=MainArray13, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="2" Grid.Column="4" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        
+        <TextBlock Text="{Binding Path=MainArray20, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="3" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=MainArray21, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="3" Grid.Column="2" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=MainArray22, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="3" Grid.Column="3" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=MainArray23, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="3" Grid.Column="4" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        
+        <TextBlock Text="{Binding Path=MainArray30, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="4" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=MainArray31, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="4" Grid.Column="2" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=MainArray32, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="4" Grid.Column="3" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
+        <TextBlock Text="{Binding Path=MainArray33, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="4" Grid.Column="4" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}"/>
     </Grid>
 </Window>
