@@ -20,6 +20,7 @@ namespace _2048_game.ViewModel
                 if(gameData == null)
                 {
                     gameData = new GameData(GenerateBeginState());
+                    OnPropertyChanged("Score");
                 }
 
                 return gameData;
