@@ -126,7 +126,8 @@ namespace _2048_game.ViewModel
 
             Random random = new Random();
 
-            int a = random.Next(4), b = random.Next(4), c = random.Next(4), d = random.Next(4);
+            int a = random.Next(4), b = random.Next(4), 
+                c = random.Next(4), d = random.Next(4);
 
             while (a == c && b == d)
             {
@@ -138,8 +139,8 @@ namespace _2048_game.ViewModel
 
             //tempArray[a, b] = 2; // КОРРЕКТНЫЙ КОД!
             //tempArray[c, d] = 2; // КОММЕНТ НА ВРЕМЯ ТЕСТИРОВАНИЯ!
-            tempArray[1, 1] = 4;
-            tempArray[1, 2] = 2;
+            tempArray[0, 0] = 4;
+            tempArray[1, 0] = 2;
             tempArray[1, 3] = 2;
             //MessageBox.Show(String.Format("{0} {1}", random1.Next(4), random1.Next(4)));
 
@@ -151,11 +152,23 @@ namespace _2048_game.ViewModel
         private void ExecuteLeftArrowCommand(object obj)
         {
             // MessageBox.Show("Left Arrow Command");
-            // Сначала слияние, потом двигать.
 
-            // Слияние влево
             for (int i = 0; i <= MainArrayVM.GetLength(0) - 1; i++) // Итерация строк
             {
+                // Сдвиг перед обработкой строки массива
+                for (int m = 0; m <= MainArrayVM.GetLength(0) - 1; m++) // Итерация строк
+                {
+                    for (int n = MainArrayVM.GetLength(1) - 1; n >= 1; n--) // Итерация столбиков
+                    {
+                        while (MainArrayVM[m, n] != 0 && MainArrayVM[m, n - 1] == 0)
+                        {
+                            MainArrayVM[m, n - 1] = MainArrayVM[m, n];
+                            MainArrayVM[m, n] = 0;
+                        }
+                    }
+                }
+
+                // Слияние влево
                 /*
                 dontCheck - переключатель для того, чтобы слитое значение не сливалось 
                 сразу же с соседним, если равные.
@@ -167,7 +180,9 @@ namespace _2048_game.ViewModel
                 {
                     if (dontCheck) continue;
 
-                    if (MainArrayVM[i, j] == MainArrayVM[i, j-1]) // Если соседние значения равные, то...
+                    // Если соседние ненулевые значения равные, то...
+                    if (MainArrayVM[i, j] != 0 && MainArrayVM[i, j - 1] != 0 &&
+                        MainArrayVM[i, j] == MainArrayVM[i, j - 1])
                     {
                         // Происходит слияние
 
@@ -175,7 +190,7 @@ namespace _2048_game.ViewModel
                             ПОДСЧИТАТЬ ОЧКИ!
                         */
 
-                        MainArrayVM[i, j-1] *= 2;
+                        MainArrayVM[i, j - 1] *= 2;
                         MainArrayVM[i, j] = 0;
 
                         dontCheck = true;
