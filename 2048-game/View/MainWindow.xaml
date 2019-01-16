@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_2048_game.ViewModel"
         mc:Ignorable="d"
-        Title="2048" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+        Title="2048" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Icon="/2048-game;component/Images/icon.png">
 
     <Window.DataContext>
         <local:MainWindowViewModel/>

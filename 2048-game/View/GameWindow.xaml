@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_2048_game.ViewModel"
         mc:Ignorable="d"
-        Title="GameWindow" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+        Title="GameWindow" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Icon="/2048-game;component/Images/icon.png">
 
     <Window.DataContext>
         <local:GameWindowViewModel/>
@@ -23,7 +23,7 @@
     <Window.Resources>
         <Style x:Key="TextBlockRectangleClassicStyle">
             <Setter Property="TextBlock.FontSize" Value="30"/>
-            <Setter Property="TextBlock.Padding" Value="0,36,0,0"/>
+            <Setter Property="TextBlock.Padding" Value="0,33,0,0"/>
             <Setter Property="TextBlock.Margin" Value="2,2,2,2"/>
             <Setter Property="TextBlock.Background" Value="AntiqueWhite"/>
             <Setter Property="TextBlock.Foreground" Value="#FF5D5D5D"/>
