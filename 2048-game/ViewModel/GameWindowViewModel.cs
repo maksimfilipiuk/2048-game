@@ -42,6 +42,7 @@ namespace _2048_game.ViewModel
             set
             {
                 gameData = value;
+                OnPropertyChanged("GameData");
             }
         }
 
@@ -183,11 +184,33 @@ namespace _2048_game.ViewModel
             if (Score > Properties.Settings.Default.Best_score)
             {
                 TheBestScore = Score;
-                
+            }
+
+            int freeCellsCount = 0;
+
+            foreach (var item in MainArrayVM)
+            {
+                if (item == 0)
+                {
+                    freeCellsCount++;
+                }
+            }
+
+            if (freeCellsCount < 1)
+            {
+                OnGameOver();
+                return;
             }
 
             GenerateValueRandomPosition();
             OnPropertyChanged("GameData");
+        }
+
+        private void OnGameOver()
+        {
+            MessageBox.Show(String.Format("Игра окончена! Ваш счёт - {0} очков!", Score), "Game over!");
+            GameData = null;
+            
         }
 
         private void GenerateValueRandomPosition()
