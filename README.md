@@ -6,7 +6,7 @@ Controls: arrow keys (left, right, up, down)
 <details>
   <summary>Images</summary>
   
-![alt text](https://i.imgur.com/3QRadwg.png)
+![alt text](https://i.imgur.com/qkjFYLK.png)
 
 ![alt text](https://i.imgur.com/FhXQg5M.png)
 
