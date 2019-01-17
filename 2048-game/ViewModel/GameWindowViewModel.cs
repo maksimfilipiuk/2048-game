@@ -33,6 +33,7 @@ namespace _2048_game.ViewModel
                     {
                         isContinue = false;
                         DeserializationGameData(); // выполняем десериализацию класса GameData
+                        OnPropertyChanged("Score"); // исправление бага, из-за которого в начале игры не отображался нулевой счёт
                     }
                 }
 
@@ -407,33 +408,36 @@ namespace _2048_game.ViewModel
         private static void SerializationGameData()
         {
             BinaryFormatter serializer = new BinaryFormatter();
-            FileStream stream = new FileStream("save.dat", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream serializationStream = new FileStream("save.dat", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
-            serializer.Serialize(stream, gameData);
+            serializer.Serialize(serializationStream, gameData);
 
-            stream.Close();
+            serializationStream.Close();
 
             /* 
              * После выполнения сериализации создаём ключ в реестре системы и присваиваем ему 
-             * ЗАШИФРОВАННОЕ значение нескольких параметров файла.
+             * ЗАШИФРОВАННОЕ значение байтов файла.
              * Делаем это для того, чтобы продолжение игры не запускалось, если файл был изменён вручную.
              * (вероятно, что файл сохранения был изменён в целях накрутки очков)
-             * > Способ шифрования байтов файла нерабочий (в моём исполнении) <
              */
 
-            FileInfo saveFileInfo = new FileInfo("save.dat");
+            FileStream cryptStream = new FileStream("save.dat", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             MD5 md5Hash = MD5.Create();
-            RegistryKey key = Registry.CurrentUser;
-            RegistryKey subKey = key.CreateSubKey("2048-game-by-devmaks");
-
             StringBuilder source = new StringBuilder();
-            source.Append(saveFileInfo.LastWriteTime);
-            source.Append(saveFileInfo.Length);
+            byte[] bytes = new byte[cryptStream.Length];
 
-            string hash = GetMd5Hash(md5Hash, source.ToString());
+            cryptStream.Read(bytes, 0, (int)cryptStream.Length);
 
-            subKey.SetValue("save_hash", hash);
-            subKey.Close();
+            foreach (var item in bytes)
+            {
+                source.Append(item);
+            }
+
+            Properties.Settings.Default.Save_hash =
+                GetMd5Hash(md5Hash, source.ToString());
+            Properties.Settings.Default.Save();
+
+            cryptStream.Close();
         }
 
         /*
@@ -444,26 +448,31 @@ namespace _2048_game.ViewModel
         private static void DeserializationGameData()
         {
             // Выполняются сверки зашифрованного ключа при сериализации и хэша данных файла при десериализации
-            FileInfo saveFileInfo = new FileInfo("save.dat");
+            FileStream cryptStream = new FileStream("save.dat", FileMode.Open, FileAccess.Read);
             MD5 md5Hash = MD5.Create();
-            RegistryKey key = Registry.CurrentUser;
-            RegistryKey subKey = key.OpenSubKey("2048-game-by-devmaks");
-
             StringBuilder source = new StringBuilder();
-            source.Append(saveFileInfo.LastWriteTime);
-            source.Append(saveFileInfo.Length);
+            byte[] bytes = new byte[cryptStream.Length];
 
-            string hash = subKey.GetValue("save_hash").ToString();
+            cryptStream.Read(bytes, 0, (int)cryptStream.Length);
+            
+            foreach (var item in bytes)
+            {
+                source.Append(item);
+            }
+
+            string hash = Properties.Settings.Default.Save_hash;
             bool isReliably = VerifyMd5Hash(md5Hash, source.ToString(), hash);
+
+            cryptStream.Close();
 
             if(isReliably)
             {
+                FileStream deserializationStream = new FileStream("save.dat", FileMode.Open, FileAccess.Read);
                 BinaryFormatter deserializer = new BinaryFormatter();
-                FileStream stream = new FileStream("save.dat", FileMode.Open, FileAccess.Read);
 
-                gameData = deserializer.Deserialize(stream) as GameData;
+                gameData = deserializer.Deserialize(deserializationStream) as GameData;
 
-                stream.Close();
+                deserializationStream.Close();
             }
             else
             {
