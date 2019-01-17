@@ -133,6 +133,26 @@ namespace _2048_game.ViewModel
 
         #endregion
 
+        RelayCommand startOverCommand;
+        public ICommand StartOverCommand
+        {
+            get
+            {
+                if(startOverCommand == null)
+                {
+                    startOverCommand = new RelayCommand(ExecuteStartOverCommand);
+                }
+
+                return startOverCommand;
+            }
+        }
+
+        private void ExecuteStartOverCommand(object obj)
+        {
+            GameData = null;
+            OnPropertyChanged("GameData");
+        }
+
         private void actionAfterArrowCommand()
         {
             GenerateValueRandomPosition();
@@ -365,6 +385,7 @@ namespace _2048_game.ViewModel
 
             MessageBox.Show(str.ToString(), "Main Array State");
         }
+
 
     }
 }
