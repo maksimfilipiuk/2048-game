@@ -34,5 +34,17 @@ namespace _2048_game.Properties {
                 this["Save_hash"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Best_score {
+            get {
+                return ((int)(this["Best_score"]));
+            }
+            set {
+                this["Best_score"] = value;
+            }
+        }
     }
 }

@@ -24,5 +24,10 @@ namespace _2048_game
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

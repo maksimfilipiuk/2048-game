@@ -66,6 +66,23 @@ namespace _2048_game.ViewModel
             set
             {
                 gameData.Score = value;
+
+                OnPropertyChanged("Score");
+            }
+        }
+
+        public int TheBestScore
+        {
+            get
+            {
+                return Properties.Settings.Default.Best_score;
+            }
+            set
+            {
+                Properties.Settings.Default.Best_score = value;
+                Properties.Settings.Default.Save();
+
+                OnPropertyChanged("TheBestScore");
             }
         }
 
@@ -163,9 +180,14 @@ namespace _2048_game.ViewModel
 
         private void actionAfterArrowCommand()
         {
+            if (Score > Properties.Settings.Default.Best_score)
+            {
+                TheBestScore = Score;
+                
+            }
+
             GenerateValueRandomPosition();
             OnPropertyChanged("GameData");
-            OnPropertyChanged("Score");
         }
 
         private void GenerateValueRandomPosition()
