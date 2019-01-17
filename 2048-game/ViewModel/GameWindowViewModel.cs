@@ -179,8 +179,12 @@ namespace _2048_game.ViewModel
             }
         }
 
+        bool dontRepeat = false;
+
         private void actionAfterArrowCommand()
         {
+            OnPropertyChanged("GameData");
+
             if (Score > Properties.Settings.Default.Best_score)
             {
                 TheBestScore = Score;
@@ -190,6 +194,12 @@ namespace _2048_game.ViewModel
 
             foreach (var item in MainArrayVM)
             {
+                if (item == 2048 && !dontRepeat)
+                {
+                    dontRepeat = true;
+                    MessageBox.Show("Ура! Вы собрали ячейку 2048!", "Победа!");
+                }
+
                 if (item == 0)
                 {
                     freeCellsCount++;
@@ -203,7 +213,6 @@ namespace _2048_game.ViewModel
             }
 
             GenerateValueRandomPosition();
-            OnPropertyChanged("GameData");
         }
 
         private void OnGameOver()
