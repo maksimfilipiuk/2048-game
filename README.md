@@ -8,8 +8,8 @@ Controls: arrow keys (left, right, up, down)
   
 ![alt text](https://i.imgur.com/qkjFYLK.png)
 
-![alt text](https://i.imgur.com/FhXQg5M.png)
+![alt text](https://i.imgur.com/yJeEyXd.png)
 
-![alt text](https://i.imgur.com/zVS0Pt6.png)
+![alt text](https://i.imgur.com/QSIEPd9.png)
   
 </details>
