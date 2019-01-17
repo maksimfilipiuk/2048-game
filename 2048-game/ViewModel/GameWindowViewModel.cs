@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Microsoft.Win32;
+using System.Security.Cryptography;
 
 namespace _2048_game.ViewModel
 {
@@ -30,8 +31,8 @@ namespace _2048_game.ViewModel
                     }
                     else
                     {
-                        DeserializationGameData(); // выполняем десериализацию класса GameData
                         isContinue = false;
+                        DeserializationGameData(); // выполняем десериализацию класса GameData
                     }
                 }
 
@@ -406,11 +407,33 @@ namespace _2048_game.ViewModel
         private static void SerializationGameData()
         {
             BinaryFormatter serializer = new BinaryFormatter();
-            FileStream stream = new FileStream("save.dat", FileMode.OpenOrCreate, FileAccess.Write);
+            FileStream stream = new FileStream("save.dat", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             serializer.Serialize(stream, gameData);
 
             stream.Close();
+
+            /* 
+             * После выполнения сериализации создаём ключ в реестре системы и присваиваем ему 
+             * ЗАШИФРОВАННОЕ значение нескольких параметров файла.
+             * Делаем это для того, чтобы продолжение игры не запускалось, если файл был изменён вручную.
+             * (вероятно, что файл сохранения был изменён в целях накрутки очков)
+             * > Способ шифрования байтов файла нерабочий (в моём исполнении) <
+             */
+
+            FileInfo saveFileInfo = new FileInfo("save.dat");
+            MD5 md5Hash = MD5.Create();
+            RegistryKey key = Registry.CurrentUser;
+            RegistryKey subKey = key.CreateSubKey("2048-game-by-devmaks");
+
+            StringBuilder source = new StringBuilder();
+            source.Append(saveFileInfo.LastWriteTime);
+            source.Append(saveFileInfo.Length);
+
+            string hash = GetMd5Hash(md5Hash, source.ToString());
+
+            subKey.SetValue("save_hash", hash);
+            subKey.Close();
         }
 
         /*
@@ -420,12 +443,32 @@ namespace _2048_game.ViewModel
          */
         private static void DeserializationGameData()
         {
-            BinaryFormatter deserializer = new BinaryFormatter();
-            FileStream stream = new FileStream("save.dat", FileMode.Open, FileAccess.Read);
+            // Выполняются сверки зашифрованного ключа при сериализации и хэша данных файла при десериализации
+            FileInfo saveFileInfo = new FileInfo("save.dat");
+            MD5 md5Hash = MD5.Create();
+            RegistryKey key = Registry.CurrentUser;
+            RegistryKey subKey = key.OpenSubKey("2048-game-by-devmaks");
 
-            gameData = deserializer.Deserialize(stream) as GameData;
+            StringBuilder source = new StringBuilder();
+            source.Append(saveFileInfo.LastWriteTime);
+            source.Append(saveFileInfo.Length);
 
-            stream.Close();
+            string hash = subKey.GetValue("save_hash").ToString();
+            bool isReliably = VerifyMd5Hash(md5Hash, source.ToString(), hash);
+
+            if(isReliably)
+            {
+                BinaryFormatter deserializer = new BinaryFormatter();
+                FileStream stream = new FileStream("save.dat", FileMode.Open, FileAccess.Read);
+
+                gameData = deserializer.Deserialize(stream) as GameData;
+
+                stream.Close();
+            }
+            else
+            {
+                MessageBox.Show("Файл сохранения повреждён, начните игру сначала!", "Критическая ошибка");
+            }
         }
 
         public static void GameWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -434,9 +477,44 @@ namespace _2048_game.ViewModel
             gameData = null;
         }
 
-        protected override void OnDispose()
+        static string GetMd5Hash(MD5 md5Hash, string input)
         {
-            MessageBox.Show("Сработал диспос");
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+            // Create a new Stringbuilder to collect the bytes
+            // and create a string.
+            StringBuilder sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data 
+            // and format each one as a hexadecimal string.
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            // Return the hexadecimal string.
+            return sBuilder.ToString();
+        }
+
+        static bool VerifyMd5Hash(MD5 md5Hash, string input, string hash)
+        {
+            // Hash the input.
+            string hashOfInput = GetMd5Hash(md5Hash, input);
+
+            // Create a StringComparer an compare the hashes.
+            StringComparer comparer = StringComparer.OrdinalIgnoreCase;
+
+            if (0 == comparer.Compare(hashOfInput, hash))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
+
+
 }
