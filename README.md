@@ -11,5 +11,7 @@ Controls: arrow keys (left, right, up, down)
 ![alt text](https://i.imgur.com/yJeEyXd.png)
 
 ![alt text](https://i.imgur.com/QSIEPd9.png)
+
+![alt text](https://i.imgur.com/LO7CIZm.png)
   
 </details>
