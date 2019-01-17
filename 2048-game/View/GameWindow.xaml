@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_2048_game.ViewModel"
         mc:Ignorable="d"
-        Title="GameWindow" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Icon="/2048-game;component/Images/icon.png">
+        Title="GameWindow" SizeToContent="WidthAndHeight" ResizeMode="NoResize" 
+        Icon="/2048-game;component/Images/icon.png">
 
     <Window.DataContext>
         <local:GameWindowViewModel/>
@@ -17,22 +18,17 @@
         <KeyBinding Key="Up" Command="{Binding UpArrowCommand}"/>
         <KeyBinding Key="Down" Command="{Binding DownArrowCommand}"/>
         <!-- developer commands -->
-            <KeyBinding Key="Tab" Command="{Binding ShowArrayStateCommand}"/>
+        <KeyBinding Key="Tab" Command="{Binding ShowArrayStateCommand}"/>
     </Window.InputBindings>
 
     <Window.Resources>
         <Style x:Key="TextBlockRectangleClassicStyle">
             <Setter Property="TextBlock.FontSize" Value="30"/>
-            <!-- FontSize - размер текста! -->
             <Setter Property="TextBlock.Padding" Value="0,33,0,0"/>
             <Setter Property="TextBlock.Margin" Value="2,2,2,2"/>
             <Setter Property="TextBlock.Background" Value="AntiqueWhite"/>
-            <!-- Можно удалить AntiqueWhite и вместо него выбрать любой из списка-->
-            <!-- Background - задний фон! -->
             <Setter Property="TextBlock.Foreground" Value="#FF5D5D5D"/>
-            <!-- Foreground - цвет текста! -->
             <Setter Property="TextBlock.FontFamily" Value="Code Pro Bold"/>
-            <!-- FontFamily - шрифт текста! -->
         </Style>
     </Window.Resources>
     

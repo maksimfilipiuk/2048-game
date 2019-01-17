@@ -7,20 +7,32 @@ using System.Windows;
 using _2048_game.Model;
 using _2048_game.Infrastructure;
 using System.Windows.Input;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using Microsoft.Win32;
 
 namespace _2048_game.ViewModel
 {
     class GameWindowViewModel : ViewModelBase
     {
-        GameData gameData;
+        private static GameData gameData; // static - костыль для сериализации (или нет)!
+        public static bool isContinue = false;
         public GameData GameData
         {
             get
             {
                 if(gameData == null)
                 {
-                    gameData = new GameData(GenerateBeginState());
-                    OnPropertyChanged("Score");
+                    if(!isContinue)
+                    {
+                        gameData = new GameData(GenerateBeginState());
+                        OnPropertyChanged("Score"); // исправление бага, из-за которого в начале игры не отображался нулевой счёт
+                    }
+                    else
+                    {
+                        DeserializationGameData(); // выполняем десериализацию класса GameData
+                        isContinue = false;
+                    }
                 }
 
                 return gameData;
@@ -145,12 +157,6 @@ namespace _2048_game.ViewModel
 
                 return startOverCommand;
             }
-        }
-
-        private void ExecuteStartOverCommand(object obj)
-        {
-            GameData = null;
-            OnPropertyChanged("GameData");
         }
 
         private void actionAfterArrowCommand()
@@ -386,6 +392,51 @@ namespace _2048_game.ViewModel
             MessageBox.Show(str.ToString(), "Main Array State");
         }
 
+        private void ExecuteStartOverCommand(object obj)
+        {
+            GameData = null;
+            OnPropertyChanged("GameData");
+        }
 
+        /* 
+         * В методе SerializationGameData обрабатываются действия при закрытии окна.
+         * В нашем случае выполняется сериализация класса GameData.
+         * Это нужно для того, чтобы была возможность продолжить игру после закрытия программы.
+         */
+        private static void SerializationGameData()
+        {
+            BinaryFormatter serializer = new BinaryFormatter();
+            FileStream stream = new FileStream("save.dat", FileMode.OpenOrCreate, FileAccess.Write);
+
+            serializer.Serialize(stream, gameData);
+
+            stream.Close();
+        }
+
+        /*
+         * Метод DeserializationGameData вызывается в том случае, если игрок
+         * решил продолжить игру, а не начать новую. 
+         * В этом методе происходит десериализация класса GameData.
+         */
+        private static void DeserializationGameData()
+        {
+            BinaryFormatter deserializer = new BinaryFormatter();
+            FileStream stream = new FileStream("save.dat", FileMode.Open, FileAccess.Read);
+
+            gameData = deserializer.Deserialize(stream) as GameData;
+
+            stream.Close();
+        }
+
+        public static void GameWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            SerializationGameData();
+            gameData = null;
+        }
+
+        protected override void OnDispose()
+        {
+            MessageBox.Show("Сработал диспос");
+        }
     }
 }

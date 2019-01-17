@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace _2048_game.Model
 {
+    [Serializable]
     class GameData
     {
         private int[,] mainArray = new int[4,4];
