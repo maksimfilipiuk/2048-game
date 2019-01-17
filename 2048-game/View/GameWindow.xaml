@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_2048_game.ViewModel"
         mc:Ignorable="d"
-        Title="GameWindow" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Icon="/2048-game;component/Images/icon.png">
+        Title="GameWindow" SizeToContent="WidthAndHeight" ResizeMode="NoResize" 
+        Icon="/2048-game;component/Images/icon.png">
 
     <Window.DataContext>
         <local:GameWindowViewModel/>
@@ -17,7 +18,7 @@
         <KeyBinding Key="Up" Command="{Binding UpArrowCommand}"/>
         <KeyBinding Key="Down" Command="{Binding DownArrowCommand}"/>
         <!-- developer commands -->
-            <KeyBinding Key="Tab" Command="{Binding ShowArrayStateCommand}"/>
+        <KeyBinding Key="Tab" Command="{Binding ShowArrayStateCommand}"/>
     </Window.InputBindings>
 
     <Window.Resources>
@@ -49,7 +50,7 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
-        <Button Content="Начать заново" Padding="10" Margin="-3, 20, 6, 20" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Button Content="Начать заново" Command="{Binding StartOverCommand}" Padding="10" Margin="-3, 20, 6, 20" Grid.Column="1" Grid.ColumnSpan="2"/>
         <StackPanel Grid.Column="3">
             <TextBlock Text="СЧЁТ" Margin="10, 20, 10, 0" TextAlignment="Center" FontSize="14"/>
             <TextBlock Text="{Binding Path=Score, UpdateSourceTrigger=PropertyChanged}" Margin="10, 0, 10, 10" TextAlignment="Center" FontSize="14"/>
