@@ -1,4 +1,4 @@
-# 2048-game
+### 2048-game
 Famous game - 2048. My version (^_^). 
 
 Controls: arrow keys (left, right, up, down)
@@ -13,3 +13,5 @@ Controls: arrow keys (left, right, up, down)
 ![alt text](https://i.imgur.com/zD7OKJM.png)
   
 </details>
+ 
+Welcome to the dev branch ;)
