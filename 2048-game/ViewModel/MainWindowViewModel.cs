@@ -54,7 +54,7 @@ namespace _2048_game.ViewModel
         private bool CanExecuteContinueGameCommand(object obj)
         {
             FileInfo saveFile = new FileInfo("save.dat");
-
+            
             if (!saveFile.Exists)
                 return false;
 

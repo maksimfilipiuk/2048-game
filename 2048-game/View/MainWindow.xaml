@@ -28,8 +28,7 @@
         <StackPanel Grid.Row="1" Grid.Column="1">
             <Button Content="Новая игра" Command="{Binding NewGameCommand}" Padding="40, 8, 40, 8" Margin="4,4,4.2,4"/>
             <Button Content="Продолжить..." Command="{Binding ContinueGameCommand}" Padding="40, 8, 40, 8" Margin="4"/>
-            <Button Content="Статистика" Padding="40, 8, 40, 8" Margin="4"/>
-            <Button Content="Выход" Padding="40, 8, 40, 8" Margin="4" />
+            <Button Content="Выход" Padding="40, 8, 40, 8" Margin="4" Click="Button_Click" />
         </StackPanel>
 
 

@@ -58,7 +58,7 @@
         
         <StackPanel Grid.Column="4">
             <TextBlock Text="ЛУЧШИЙ" Margin="10, 20, 10, 0" TextAlignment="Center" FontSize="14"/>
-            <TextBlock Text="-1" Margin="10, 0, 10, 10" TextAlignment="Center" FontSize="14"/>
+            <TextBlock Text="{Binding Path=TheBestScore, UpdateSourceTrigger=PropertyChanged}" Margin="10, 0, 10, 10" TextAlignment="Center" FontSize="14"/>
         </StackPanel>
 
         <TextBlock Text="{Binding Path=GameData.MainArray00, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" Grid.Row="1" Grid.Column="1" Style="{StaticResource ResourceKey=TextBlockRectangleClassicStyle}" />
